@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="dc9b2387f7f3413fb3c8f06d270c556b" Name="Diagram1">
+        <EntityTypeShape EntityType="modelo.Model.candidato" Width="1.5" PointX="0.75" PointY="5" />
+        <EntityTypeShape EntityType="modelo.Model.entrevista" Width="1.5" PointX="3" PointY="5.625" />
+        <EntityTypeShape EntityType="modelo.Model.opciones_tecnologia" Width="1.5" PointX="3" PointY="0.875" />
+        <EntityTypeShape EntityType="modelo.Model.tipo_entrevista" Width="1.5" PointX="0.75" PointY="10.125" />
+        <EntityTypeShape EntityType="modelo.Model.tipo_tecnologia" Width="1.5" PointX="0.75" PointY="1.125" />
+        <AssociationConnector Association="modelo.Model.FK__entrevist__candi__30F848ED" />
+        <AssociationConnector Association="modelo.Model.FK__entrevist__tipo___31EC6D26" />
+        <AssociationConnector Association="modelo.Model.FK__opciones___tipo___29572725" />
+        <AssociationConnector Association="modelo.Model.FK__opciones___tipo___2E1BDC42" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

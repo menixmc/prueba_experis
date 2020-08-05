@@ -1,0 +1,241 @@
+﻿@model List<data.Usuario>
+@{
+    ViewBag.Title = "Usuarios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Listado de usuarios</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">inicio</a></li>
+                    <li class="breadcrumb-item active">Usuarios</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 text-right form-group">
+                                <button type="button" class="btn btn-primary" onclick="ProgramarEntrevistas()">Programar entrevista</button>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="tblusuarios" class="table table-bordered table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <td></td>
+                                        <td>Id</td>
+                                        <th>Nombre</th>
+                                        <th>Usuario</th>
+                                        <th>Email</th>
+                                        <th>Direccion</th>
+                                        <th>Telefono</th>
+                                        <th>Sitio Web</th>
+                                        <th>Compañia</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+
+
+                                    @foreach (data.Usuario item in Model)
+                                    {
+
+                                        <tr>
+                                            <td>
+                                                <input type="checkbox" class="chek" id="chk_@item.id" value="@item.id" />
+                                                <input type="hidden" id="email_@item.id" value="@item.email" />
+                                                <input type="hidden" id="name_@item.id" value="@item.name" />
+                                            </td>
+                                            <td>@item.id</td>
+                                            <td>@item.name</td>
+                                            <td>@item.username</td>
+                                            <td>@item.email</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Calle: @item.address.street</li>
+                                                    <li>Suite: @item.address.suite</li>
+                                                    <li>Ciudad: @item.address.city</li>
+                                                    <li>código postal: @item.address.zipcode</li>
+                                                </ul>
+                                            </td>
+                                            <td>@item.phone</td>
+                                            <td>@item.website</td>
+                                            <td>
+                                                <ul>
+                                                    <li>Nombre:@item.company.name </li>
+                                                    <li>Frase: @item.company.catchPhrase</li>
+                                                    <li>Bs: @item.company.bs</li>
+                                                </ul>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<input type="hidden" id="posicion" name="posicion" value="0" />
+<div class="modal" id="modal" tabindex="-1" role="dialog" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Agendar entrevista</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <input type="hidden" name="id_candidato" id="id_candidato" />
+                    <div class="col-sm-12 form-group">
+                        <label class="control-label">Nombre del candidato</label>
+                        <input class="form-control" type="text" readonly value="" id="nom_candidato" name="nom_candidato" />
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label class="control-label">Tipo de entrevista:</label>
+                        <select class="form-control" id="tipo_entrevista" name="tipo_entrevista">
+                            <option value="">-Seleccionar -</option>
+                            @foreach (data.Models.tipo_entrevista item in ViewBag.tipoentrevista)
+                            {
+                                <option value="@item.id_tipo_entrevista">@item.descripcion</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label class="control-label">Fecha entrevista:</label>
+                        <input class="form-control" type="date" id="fecha_entrevista" name="fecha_entrevista" />
+                    </div>
+                    <div class="col-sm-6 form-group">
+                        <label class="control-label">Hora entrevista:</label>
+                        <input class="form-control" type="time" id="hora_entrevista" name="hora_entrevista" />
+                    </div>
+                    <div class="col-sm-12 form-group">
+                        <label class="control-label">Observaciones:</label>
+                        <textarea class="form-control" maxlength="250" id="obs_entrevista" name="obs_entrevista"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" onclick="comprobar_diponibilidad()">Guardar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Plantilla/plugins/jquery/jquery.min.js"></script>
+<script>
+    
+    var seleccionados = [];
+
+    function ProgramarEntrevistas()
+    {
+        seleccionados = [];
+        var posicion = $("#posicion").val();
+
+        $("#tblusuarios tbody .chek").each(function () {
+            var id = $(this).val();
+            if ($(this).is(':checked')) {
+                seleccionados.push(id);
+            }
+        });
+
+        if (seleccionados.length == 0) {
+            alert("Debe seleccionar almenos un candidato");
+        }
+        else {
+            if (posicion < seleccionados.length) {
+                $("#id_candidato").val(seleccionados[posicion]);
+                $("#nom_candidato").val($("#name_" + seleccionados[posicion]).val());
+                $("#tipo_entrevista").val("");
+                $("#fecha_entrevista").val("");
+                $("#hora_entrevista").val("");
+                $("#obs_entrevista").val("");
+                $("#modal").modal('show');
+            }
+            else
+            {
+                alert("Se han programado todas las entrevistas para los canditos seleccionados");
+            }
+        }
+    }
+
+
+    function comprobar_diponibilidad() {
+
+        $.ajax({
+            url: "@Url.Action("Validar_Disponibilidad")",
+            type: "post",
+            data:
+            {
+                fecha: $("#fecha_entrevista").val(),
+                hora: $("#hora_entrevista").val(),
+          
+            },
+            success: function (data)
+            {
+                if (data == "True")
+                {
+                    $("#modal").modal('hide');
+                    guardar_entrevista();
+
+                }else
+                {
+                    alert("Ya hay una entrevista programada en este horario");
+                }
+            }
+        })
+
+    }
+
+
+    function guardar_entrevista()
+    {
+
+        $.ajax({
+            url: "@Url.Action("GuardarEntrevista")",
+            type: "post",
+            data: {
+                posicion: $("#posicion").val(),
+                id_candidato: $("#id_candidato").val(),
+                tipo_entrevista: $("#tipo_entrevista").val(),
+                fecha_entrevista: $("#fecha_entrevista").val(),
+                hora_entrevista: $("#hora_entrevista").val(),
+                observaciones: $("#obs_entrevista").val()
+            },
+            success: function (data)
+            {
+                if (data.rta = "True")
+                {
+                    $("#posicion").val(data.psc);
+                    alert(data.msj);
+                    ProgramarEntrevistas();
+                } else
+                {
+                    alert(data.msj);
+                }
+                
+            }
+        })
+    }
+
+</script>
+

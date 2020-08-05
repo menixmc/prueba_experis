@@ -1,0 +1,143 @@
+﻿@{
+    ViewBag.Title = "Reclutar";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Reclutar</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">inicio</a></li>
+                    <li class="breadcrumb-item active">Reclutar</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="countopciones" name="countopciones" value="0"/>
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-body">
+                        <form id="formulario" method="post" action="@Url.Action("BuscarUsuarios","Home")" enctype="multipart/form-data">
+                            <input id="seleccionados" name="seleccionados" type="hidden"/>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="alert alert-info" role="alert">
+                                        Recuerde seleccionar almenos un tipo de tecnologia.
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input check" type="radio" name="radio1" value="1">
+                                            <label class="form-check-label">Microsot .Net</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-group">
+                                        <div class="form-check">
+                                            <input class="form-check-input check" type="radio" name="radio1" value="2">
+                                            <label class="form-check-label">Oracle Java</label>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <table id="tblopciones" class="table table-bordered table-striped table-condensed">
+                                        <thead>
+                                            <tr>
+                                                <th>selección</th>
+                                                <th>Id</th>
+                                                <th>Opción Framework</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td colspan="3" class="text-center">Sin información</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-sm-12 form-group text-right">
+                                    <button type="button" class="btn btn-primary" onclick="ObtenerUsuarios()">Buscar usuarios</button>
+                                </div>
+                            </div>
+                        </form>
+                  
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Plantilla/plugins/jquery/jquery.min.js"></script>
+<script>
+    $(document).ready(function ()
+    {
+        $(".check").click(function ()
+        {
+            var valor = $(this).val();
+            if (valor != "")
+            {
+                $.ajax({
+                    url: "@Url.Action("GetOpcionesTecnologia")",
+                    type: "post",
+                    dataType: "json",
+                    data: { idtipotecnologia: valor },
+                    success: function (data)
+                    {
+                        if (data.respuesta == 0)
+                        {
+                            $("#countopciones").val(data.count);
+                            $("#tblopciones tbody").empty();
+                            $("#tblopciones tbody").html(data.resultado);
+                        } else {
+                            alert(data.resultado);
+                        }
+                    }
+                })
+            }
+
+        });
+    });
+
+    function ObtenerUsuarios()
+    {
+        
+        contador = $("#countopciones").val();
+        if (contador != 0) {
+            var seleccionados = [];
+            for (var i = 1; i < 6; i++)
+            {
+                if ($("#chk_" + i).is(':checked')) {
+                    seleccionados.push($("#chk_" + i).val())
+                }
+            }
+
+            if (seleccionados.length == 0) {
+                alert("No ha seleccionado ninguna de las opciones de tecnologia");
+            }
+            else
+            {
+                $("#seleccionados").val(seleccionados);
+                $("#formulario").submit();
+            }
+
+        }
+        else
+        {
+            alert("No ha seleccionado ningun tipo de tecnologia");
+        }
+    }
+</script>

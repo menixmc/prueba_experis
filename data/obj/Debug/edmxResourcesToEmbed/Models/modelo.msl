@@ -1,0 +1,62 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="modeloModelStoreContainer" CdmEntityContainer="modeloEntities">
+    <EntitySetMapping Name="candidato">
+      <EntityTypeMapping TypeName="modelo.Model.candidato">
+        <MappingFragment StoreEntitySet="candidato">
+          <ScalarProperty Name="api_id" ColumnName="api_id" />
+          <ScalarProperty Name="compañia_bs" ColumnName="compañia_bs" />
+          <ScalarProperty Name="compañia_catchPhrase" ColumnName="compañia_catchPhrase" />
+          <ScalarProperty Name="compañia_nombre" ColumnName="compañia_nombre" />
+          <ScalarProperty Name="sitio_web" ColumnName="sitio_web" />
+          <ScalarProperty Name="telefono" ColumnName="telefono" />
+          <ScalarProperty Name="direccion_codigo_postal" ColumnName="direccion_codigo_postal" />
+          <ScalarProperty Name="direccion_ciudad" ColumnName="direccion_ciudad" />
+          <ScalarProperty Name="direccion_suite" ColumnName="direccion_suite" />
+          <ScalarProperty Name="direccion_calle" ColumnName="direccion_calle" />
+          <ScalarProperty Name="email" ColumnName="email" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="id_candidato" ColumnName="id_candidato" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="entrevista">
+      <EntityTypeMapping TypeName="modelo.Model.entrevista">
+        <MappingFragment StoreEntitySet="entrevista">
+          <ScalarProperty Name="tipo_entrevista_id" ColumnName="tipo_entrevista_id" />
+          <ScalarProperty Name="observaciones" ColumnName="observaciones" />
+          <ScalarProperty Name="hora_entrevista" ColumnName="hora_entrevista" />
+          <ScalarProperty Name="fecha_entrevista" ColumnName="fecha_entrevista" />
+          <ScalarProperty Name="candidato_id" ColumnName="candidato_id" />
+          <ScalarProperty Name="id_entrevista" ColumnName="id_entrevista" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="opciones_tecnologia">
+      <EntityTypeMapping TypeName="modelo.Model.opciones_tecnologia">
+        <MappingFragment StoreEntitySet="opciones_tecnologia">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="orden_id" ColumnName="orden_id" />
+          <ScalarProperty Name="tipo_tecnologia_id" ColumnName="tipo_tecnologia_id" />
+          <ScalarProperty Name="id_opcion" ColumnName="id_opcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tipo_entrevista">
+      <EntityTypeMapping TypeName="modelo.Model.tipo_entrevista">
+        <MappingFragment StoreEntitySet="tipo_entrevista">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id_tipo_entrevista" ColumnName="id_tipo_entrevista" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tipo_tecnologia">
+      <EntityTypeMapping TypeName="modelo.Model.tipo_tecnologia">
+        <MappingFragment StoreEntitySet="tipo_tecnologia">
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+          <ScalarProperty Name="id_tipo_tecnologia" ColumnName="id_tipo_tecnologia" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

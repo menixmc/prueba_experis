@@ -1,0 +1,134 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="modelo.Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="modeloEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="candidato" EntityType="modelo.Model.candidato" />
+    <EntitySet Name="entrevista" EntityType="modelo.Model.entrevista" />
+    <EntitySet Name="opciones_tecnologia" EntityType="modelo.Model.opciones_tecnologia" />
+    <EntitySet Name="tipo_entrevista" EntityType="modelo.Model.tipo_entrevista" />
+    <EntitySet Name="tipo_tecnologia" EntityType="modelo.Model.tipo_tecnologia" />
+    <AssociationSet Name="FK__entrevist__candi__30F848ED" Association="modelo.Model.FK__entrevist__candi__30F848ED">
+      <End Role="candidato" EntitySet="candidato" />
+      <End Role="entrevista" EntitySet="entrevista" />
+    </AssociationSet>
+    <AssociationSet Name="FK__entrevist__tipo___31EC6D26" Association="modelo.Model.FK__entrevist__tipo___31EC6D26">
+      <End Role="tipo_entrevista" EntitySet="tipo_entrevista" />
+      <End Role="entrevista" EntitySet="entrevista" />
+    </AssociationSet>
+    <AssociationSet Name="FK__opciones___tipo___29572725" Association="modelo.Model.FK__opciones___tipo___29572725">
+      <End Role="tipo_tecnologia" EntitySet="tipo_tecnologia" />
+      <End Role="opciones_tecnologia" EntitySet="opciones_tecnologia" />
+    </AssociationSet>
+    <AssociationSet Name="FK__opciones___tipo___2E1BDC42" Association="modelo.Model.FK__opciones___tipo___2E1BDC42">
+      <End Role="tipo_tecnologia" EntitySet="tipo_tecnologia" />
+      <End Role="opciones_tecnologia" EntitySet="opciones_tecnologia" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="candidato">
+    <Key>
+      <PropertyRef Name="id_candidato" />
+    </Key>
+    <Property Name="id_candidato" Type="Int32" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="email" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <Property Name="direccion_calle" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="direccion_suite" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="direccion_ciudad" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="direccion_codigo_postal" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="telefono" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="sitio_web" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="compañia_nombre" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="compañia_catchPhrase" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="compañia_bs" Type="String" MaxLength="200" FixedLength="false" Unicode="false" />
+    <Property Name="api_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="entrevista" Relationship="modelo.Model.FK__entrevist__candi__30F848ED" FromRole="candidato" ToRole="entrevista" />
+  </EntityType>
+  <EntityType Name="entrevista">
+    <Key>
+      <PropertyRef Name="id_entrevista" />
+    </Key>
+    <Property Name="id_entrevista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="candidato_id" Type="Int32" Nullable="false" />
+    <Property Name="fecha_entrevista" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="hora_entrevista" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+    <Property Name="observaciones" Type="String" MaxLength="300" FixedLength="false" Unicode="false" />
+    <Property Name="tipo_entrevista_id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="candidato" Relationship="modelo.Model.FK__entrevist__candi__30F848ED" FromRole="entrevista" ToRole="candidato" />
+    <NavigationProperty Name="tipo_entrevista" Relationship="modelo.Model.FK__entrevist__tipo___31EC6D26" FromRole="entrevista" ToRole="tipo_entrevista" />
+  </EntityType>
+  <EntityType Name="opciones_tecnologia">
+    <Key>
+      <PropertyRef Name="id_opcion" />
+    </Key>
+    <Property Name="id_opcion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="tipo_tecnologia_id" Type="Int32" Nullable="false" />
+    <Property Name="orden_id" Type="Int32" Nullable="false" />
+    <Property Name="descripcion" Type="String" MaxLength="70" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tipo_tecnologia" Relationship="modelo.Model.FK__opciones___tipo___29572725" FromRole="opciones_tecnologia" ToRole="tipo_tecnologia" />
+    <NavigationProperty Name="tipo_tecnologia1" Relationship="modelo.Model.FK__opciones___tipo___2E1BDC42" FromRole="opciones_tecnologia" ToRole="tipo_tecnologia" />
+  </EntityType>
+  <EntityType Name="tipo_entrevista">
+    <Key>
+      <PropertyRef Name="id_tipo_entrevista" />
+    </Key>
+    <Property Name="id_tipo_entrevista" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="60" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="entrevista" Relationship="modelo.Model.FK__entrevist__tipo___31EC6D26" FromRole="tipo_entrevista" ToRole="entrevista" />
+  </EntityType>
+  <EntityType Name="tipo_tecnologia">
+    <Key>
+      <PropertyRef Name="id_tipo_tecnologia" />
+    </Key>
+    <Property Name="id_tipo_tecnologia" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="opciones_tecnologia" Relationship="modelo.Model.FK__opciones___tipo___29572725" FromRole="tipo_tecnologia" ToRole="opciones_tecnologia" />
+    <NavigationProperty Name="opciones_tecnologia1" Relationship="modelo.Model.FK__opciones___tipo___2E1BDC42" FromRole="tipo_tecnologia" ToRole="opciones_tecnologia" />
+  </EntityType>
+  <Association Name="FK__entrevist__candi__30F848ED">
+    <End Type="modelo.Model.candidato" Role="candidato" Multiplicity="1" />
+    <End Type="modelo.Model.entrevista" Role="entrevista" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="candidato">
+        <PropertyRef Name="id_candidato" />
+      </Principal>
+      <Dependent Role="entrevista">
+        <PropertyRef Name="candidato_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__entrevist__tipo___31EC6D26">
+    <End Type="modelo.Model.tipo_entrevista" Role="tipo_entrevista" Multiplicity="1" />
+    <End Type="modelo.Model.entrevista" Role="entrevista" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_entrevista">
+        <PropertyRef Name="id_tipo_entrevista" />
+      </Principal>
+      <Dependent Role="entrevista">
+        <PropertyRef Name="tipo_entrevista_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__opciones___tipo___29572725">
+    <End Type="modelo.Model.tipo_tecnologia" Role="tipo_tecnologia" Multiplicity="1" />
+    <End Type="modelo.Model.opciones_tecnologia" Role="opciones_tecnologia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_tecnologia">
+        <PropertyRef Name="id_tipo_tecnologia" />
+      </Principal>
+      <Dependent Role="opciones_tecnologia">
+        <PropertyRef Name="tipo_tecnologia_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__opciones___tipo___2E1BDC42">
+    <End Type="modelo.Model.tipo_tecnologia" Role="tipo_tecnologia" Multiplicity="1" />
+    <End Type="modelo.Model.opciones_tecnologia" Role="opciones_tecnologia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_tecnologia">
+        <PropertyRef Name="id_tipo_tecnologia" />
+      </Principal>
+      <Dependent Role="opciones_tecnologia">
+        <PropertyRef Name="tipo_tecnologia_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

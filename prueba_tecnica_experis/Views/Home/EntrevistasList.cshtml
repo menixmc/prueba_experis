@@ -1,0 +1,74 @@
+﻿@model List<data.Models.entrevista>
+@{
+    ViewBag.Title = "Listado entrevistas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Listado de entrevistas programadas</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">inicio</a></li>
+                    <li class="breadcrumb-item active">entrevistas programadas</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-primary">
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <form id="formulario" method="post" action="@Url.Action("EntrevistasList")" enctype="multipart/form-data">
+                                <div class="row">
+                                    <div class="col-sm-6 form-group">
+                                        <label class="control-label">Buscar por fecha:</label>
+                                        <input  type="date" id="fecha" name="fecha" required />
+                                    </div>
+                                    <div class="col-sm-6 form-group text-right">
+                                        <label style="width:100%; visibility:hidden;" class="control-label">Buscar:</label>
+                                        <button type="submit" class="btn btn-success"><i class="fas fa-search"></i>&nbsp; Buscar Entrevistas</button>
+                                    </div>
+                                </div>
+                            </form>
+
+                            <table id="tblusuarios" class="table table-bordered table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Candidato</th>
+                                        <th>Email</th>
+                                        <th>Tipo entrevista</th>
+                                        <th>Fecha</th>
+                                        <th>Hora</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach(data.Models.entrevista item in Model)
+                                    {
+                                    <tr>
+                                        <td>@item.candidato.nombre</td>
+                                        <td>@item.candidato.email</td>
+                                        <td>@item.tipo_entrevista.descripcion</td>
+                                        <td>@item.fecha_entrevista.ToString("dd/MM/yyyy")</td>
+                                        <td>@item.hora_entrevista</td>
+                                    </tr>
+                                    }
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+

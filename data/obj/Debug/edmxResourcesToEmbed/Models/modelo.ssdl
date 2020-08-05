@@ -1,0 +1,126 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="modelo.Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="candidato">
+    <Key>
+      <PropertyRef Name="id_candidato" />
+    </Key>
+    <Property Name="id_candidato" Type="int" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="70" />
+    <Property Name="email" Type="varchar" MaxLength="70" />
+    <Property Name="direccion_calle" Type="varchar" MaxLength="200" />
+    <Property Name="direccion_suite" Type="varchar" MaxLength="200" />
+    <Property Name="direccion_ciudad" Type="varchar" MaxLength="200" />
+    <Property Name="direccion_codigo_postal" Type="varchar" MaxLength="100" />
+    <Property Name="telefono" Type="varchar" MaxLength="100" />
+    <Property Name="sitio_web" Type="varchar" MaxLength="200" />
+    <Property Name="compañia_nombre" Type="varchar" MaxLength="200" />
+    <Property Name="compañia_catchPhrase" Type="varchar" MaxLength="200" />
+    <Property Name="compañia_bs" Type="varchar" MaxLength="200" />
+    <Property Name="api_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="entrevista">
+    <Key>
+      <PropertyRef Name="id_entrevista" />
+    </Key>
+    <Property Name="id_entrevista" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="candidato_id" Type="int" Nullable="false" />
+    <Property Name="fecha_entrevista" Type="datetime" Nullable="false" />
+    <Property Name="hora_entrevista" Type="varchar" MaxLength="10" />
+    <Property Name="observaciones" Type="varchar" MaxLength="300" />
+    <Property Name="tipo_entrevista_id" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="opciones_tecnologia">
+    <Key>
+      <PropertyRef Name="id_opcion" />
+    </Key>
+    <Property Name="id_opcion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="tipo_tecnologia_id" Type="int" Nullable="false" />
+    <Property Name="orden_id" Type="int" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="70" />
+  </EntityType>
+  <EntityType Name="tipo_entrevista">
+    <Key>
+      <PropertyRef Name="id_tipo_entrevista" />
+    </Key>
+    <Property Name="id_tipo_entrevista" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="60" />
+  </EntityType>
+  <EntityType Name="tipo_tecnologia">
+    <Key>
+      <PropertyRef Name="id_tipo_tecnologia" />
+    </Key>
+    <Property Name="id_tipo_tecnologia" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <Association Name="FK__entrevist__candi__30F848ED">
+    <End Role="candidato" Type="Self.candidato" Multiplicity="1" />
+    <End Role="entrevista" Type="Self.entrevista" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="candidato">
+        <PropertyRef Name="id_candidato" />
+      </Principal>
+      <Dependent Role="entrevista">
+        <PropertyRef Name="candidato_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__entrevist__tipo___31EC6D26">
+    <End Role="tipo_entrevista" Type="Self.tipo_entrevista" Multiplicity="1" />
+    <End Role="entrevista" Type="Self.entrevista" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_entrevista">
+        <PropertyRef Name="id_tipo_entrevista" />
+      </Principal>
+      <Dependent Role="entrevista">
+        <PropertyRef Name="tipo_entrevista_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__opciones___tipo___29572725">
+    <End Role="tipo_tecnologia" Type="Self.tipo_tecnologia" Multiplicity="1" />
+    <End Role="opciones_tecnologia" Type="Self.opciones_tecnologia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_tecnologia">
+        <PropertyRef Name="id_tipo_tecnologia" />
+      </Principal>
+      <Dependent Role="opciones_tecnologia">
+        <PropertyRef Name="tipo_tecnologia_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__opciones___tipo___2E1BDC42">
+    <End Role="tipo_tecnologia" Type="Self.tipo_tecnologia" Multiplicity="1" />
+    <End Role="opciones_tecnologia" Type="Self.opciones_tecnologia" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tipo_tecnologia">
+        <PropertyRef Name="id_tipo_tecnologia" />
+      </Principal>
+      <Dependent Role="opciones_tecnologia">
+        <PropertyRef Name="tipo_tecnologia_id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="modeloModelStoreContainer">
+    <EntitySet Name="candidato" EntityType="Self.candidato" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="entrevista" EntityType="Self.entrevista" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="opciones_tecnologia" EntityType="Self.opciones_tecnologia" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tipo_entrevista" EntityType="Self.tipo_entrevista" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tipo_tecnologia" EntityType="Self.tipo_tecnologia" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__entrevist__candi__30F848ED" Association="Self.FK__entrevist__candi__30F848ED">
+      <End Role="candidato" EntitySet="candidato" />
+      <End Role="entrevista" EntitySet="entrevista" />
+    </AssociationSet>
+    <AssociationSet Name="FK__entrevist__tipo___31EC6D26" Association="Self.FK__entrevist__tipo___31EC6D26">
+      <End Role="tipo_entrevista" EntitySet="tipo_entrevista" />
+      <End Role="entrevista" EntitySet="entrevista" />
+    </AssociationSet>
+    <AssociationSet Name="FK__opciones___tipo___29572725" Association="Self.FK__opciones___tipo___29572725">
+      <End Role="tipo_tecnologia" EntitySet="tipo_tecnologia" />
+      <End Role="opciones_tecnologia" EntitySet="opciones_tecnologia" />
+    </AssociationSet>
+    <AssociationSet Name="FK__opciones___tipo___2E1BDC42" Association="Self.FK__opciones___tipo___2E1BDC42">
+      <End Role="tipo_tecnologia" EntitySet="tipo_tecnologia" />
+      <End Role="opciones_tecnologia" EntitySet="opciones_tecnologia" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
